@@ -6,7 +6,7 @@ from openpyxl.chart import PieChart, Reference
 from datetime import datetime
 
 # Get the path to the Excel file
-excel_file_path = r"C:\Users\AlphaH\Desktop\Time graph.xlsx"
+excel_file_path = r"WRITE YOUR PATH HERE"
 
 # Get the current date
 current_date = datetime.now().strftime('%Y-%m-%d')
