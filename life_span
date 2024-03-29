@@ -1,0 +1,52 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+from IPython.display import HTML
+
+# Define the parameters
+life_expectancy = 80  # Total life expectancy in years
+stages_of_life = [10, 20, 40, 80]  # Stages of life in years
+seconds_per_year = 24 * 60 * 60 * 365  # Number of seconds in a year
+
+# Function to calculate radius from seconds
+def radius_from_seconds(seconds):
+    return np.sqrt(seconds)
+
+# Function to update the animation
+def update(frame):
+    ax.clear()
+    ax.axis('off')
+    ax.set_xlim(-life_radius, life_radius)
+    ax.set_ylim(-life_radius, life_radius)
+
+    # Draw life circle
+    ax.add_artist(plt.Circle((0, 0), life_radius, color='blue', fill=True, alpha=0.1))
+
+    # Draw each stage circle up to the current frame
+    for stage, color, label in zip(stages_of_life, colors, ['10 years', '20 years', '40 years', '80 years']):
+        stage_seconds = stage * seconds_per_year
+        stage_radius = radius_from_seconds(stage_seconds)
+        if stage_radius <= frame:
+            circle = plt.Circle((0, 0), stage_radius, color=color, fill=True, alpha=0.5)
+            ax.add_artist(circle)
+            # Calculate offset for label position based on radius
+            offset = 0.1 * stage_radius  # Adjust this factor as needed
+            ax.text(0, 0 - stage_radius + offset, label, ha='center', va='center', color='white', fontsize=8)
+
+    # Draw the center dot with radius equivalent to 1 second
+    ax.plot(0, 0, 'ro', markersize=1)  # Small fixed marker size for 1 second
+    
+    # Add heading text
+    heading_text = "80 years = 2.5 billion seconds"
+    ax.text(0, life_radius * 1.2, heading_text, ha='center', va='center', fontsize=12)
+
+# Create a new figure and axis
+fig, ax = plt.subplots()
+life_radius = radius_from_seconds(life_expectancy * seconds_per_year)
+colors = ['green', 'orange', 'red', 'purple']  # Added color for 80 years
+
+# Create the animation
+ani = FuncAnimation(fig, update, frames=np.linspace(0, life_radius, num=100), interval=100)
+
+# Display the animation as HTML5 video
+HTML(ani.to_html5_video())
