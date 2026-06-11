@@ -1,0 +1,22 @@
+# Core scientific Python stack
+numpy
+pandas
+scipy
+scikit-learn
+statsmodels
+openpyxl
+
+# Deep learning
+torch
+torchvision
+timm
+
+# Visualization and utilities
+matplotlib
+tqdm
+Pillow
+opencv-python
+
+# Optional, depending on the local LoRA/RETFound implementation
+peft
+accelerate
